@@ -19,7 +19,7 @@ normI = min(A, [] , 3);
 minI = 1 - normI;
 
 % 3. Use guided filtering to refine the transmission map
-rawTransmissionMap = utils.algImguidedFilter(minI, minI, [5 5], epsilon);
+rawTransmissionMap = utils.algImguidedFilter(minI, minI, [30 30], epsilon);
 transitionMap = min(1, max(0, rawTransmissionMap));
 
 % Thickness of haze in input image is second output of imreducehaze.
