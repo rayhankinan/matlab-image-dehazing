@@ -8,7 +8,7 @@ function [correctedA, thicknessOfHaze, atmLight] = dehaze(A, epsilon, omega, min
 isRGB = size(A, 3) == 3;
 
 % 1. Estimate atmospheric light
-atmLight = utils.computeAtmLight(A, 5, 30);
+atmLight = utils.computeAtmLight(A, 5);
 
 if isRGB
     atmLight = reshape(atmLight, [1 1 3]);
@@ -37,8 +37,8 @@ t0 = cast(minimumTransmissionValue, 'like', A);
 rawRadianceMap = atmLight + (A - atmLight) ./ max(omegaTransitionMap, t0);
 radianceMap = min(1, max(0, rawRadianceMap));
 
-% Corrected image
-correctedA = radianceMap;
+% Global stretching of radiance map (Optional)
+correctedA = utils.globalStretching(radianceMap, 0.75, [0.001, 0.999], 0.8);
 
 % Reshape atmLight to 1 x 3 vector if input image is RGB
 if isRGB

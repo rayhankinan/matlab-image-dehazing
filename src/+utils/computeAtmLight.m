@@ -1,9 +1,12 @@
-function atmLight = computeAtmLight(A, numLevels, winSize)
+function atmLight = computeAtmLight(A, numLevels)
 % Quad-tree decomposition of dark channel is used for estimation
 % of atmospheric light as given in reference paper [2]
 
 [dm, dn, ~] = size(A);
 Q = [1, 1, dm, dn];
+
+% Heuristic: Window size for finding spatial minimum value for dark channel
+winSize = ceil(min(size(A,1),size(A,2)) / 400 * 15);
 
 % Create dark channel from non-overlapping patches
 minFiltStrel = strel('square', winSize);
