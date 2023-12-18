@@ -8,7 +8,7 @@ function [correctedA, thicknessOfHaze, atmLight] = dehaze(A, epsilon, omega, min
 isRGB = size(A, 3) == 3;
 
 % 1. Estimate atmospheric light
-atmLight = utils.computeAtmLight(A, 5);
+atmLight = utils.computeAtmLight(A, 5, 30);
 
 if isRGB
     atmLight = reshape(atmLight, [1 1 3]);
